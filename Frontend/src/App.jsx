@@ -4,6 +4,7 @@ import Feed from './pages/Feed';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import BottomBar from './component/BottomBar';
 
+
 const App = () => {
   return (
     <BrowserRouter>
