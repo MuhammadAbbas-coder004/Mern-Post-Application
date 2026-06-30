@@ -13,7 +13,7 @@ const CreatePost = () => {
     formData.append('image', file)
 formData.append('caption', caption)
 
-axios.post('http://localhost:3000/create-post', formData)
+axios.post('https://satisfied-success-production-59f0.up.railway.app/create-post', formData)
 .then((res)=>{
 console.log(res);
 

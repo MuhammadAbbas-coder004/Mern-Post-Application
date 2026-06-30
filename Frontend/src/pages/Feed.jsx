@@ -18,7 +18,7 @@ const [posts, setPosts] = useState([
 
 useEffect(()=>{
 
-axios.get('http://localhost:3000/posts')
+axios.get('https://satisfied-success-production-59f0.up.railway.app/posts')
 .then((res) =>{
 setPosts(res.data.posts)
 
