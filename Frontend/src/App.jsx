@@ -6,13 +6,32 @@ import BottomBar from './component/BottomBar';
 
 
 const App = () => {
+  const [isDarkMode, setIsDarkMode] = React.useState(() => {
+    const savedTheme = localStorage.getItem('theme');
+    return savedTheme === 'dark';
+  });
+
+  React.useEffect(() => {
+    if (isDarkMode) {
+      document.body.classList.add('dark-mode');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      document.body.classList.remove('dark-mode');
+      localStorage.setItem('theme', 'light');
+    }
+  }, [isDarkMode]);
+
+  const toggleTheme = () => {
+    setIsDarkMode(!isDarkMode);
+  };
+
   return (
     <BrowserRouter>
       <Routes>
         <Route path='/' element={<CreatePost/>} />
         <Route path='/feed' element={<Feed/>} />
       </Routes>
-      <BottomBar/>
+      <BottomBar isDarkMode={isDarkMode} toggleTheme={toggleTheme} />
     </BrowserRouter>
   )
 }
