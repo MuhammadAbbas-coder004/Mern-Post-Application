@@ -13,10 +13,10 @@ const App = () => {
 
   React.useEffect(() => {
     if (isDarkMode) {
-      document.body.classList.add('dark-mode');
+      document.documentElement.classList.add('dark');
       localStorage.setItem('theme', 'dark');
     } else {
-      document.body.classList.remove('dark-mode');
+      document.documentElement.classList.remove('dark');
       localStorage.setItem('theme', 'light');
     }
   }, [isDarkMode]);

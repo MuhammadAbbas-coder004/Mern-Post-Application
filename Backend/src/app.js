@@ -11,23 +11,28 @@ app.use(express.json());
 let upload = multer({ storage: multer.memoryStorage() });
 
 
-app.post('/create-post',upload.single("image"), async (req,res)=>{
+app.post('/create-post', upload.single("image"), async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ error: "Image is required" });
+    }
 
-const result = await uploadFile(req.file.buffer);
+    const result = await uploadFile(req.file.buffer);
 
-const post =  await postModel.create({
-image: result.url,
-caption: req.body.caption
+    const post = await postModel.create({
+      image: result.url,
+      caption: req.body.caption
+    });
 
-})
-
-return res.status(201).json({
-message: 'Post Created Sussessfully',
-post
-
-})
-
-})
+    return res.status(201).json({
+      message: 'Post Created Sussessfully',
+      post
+    });
+  } catch (error) {
+    console.error("Error creating post:", error);
+    return res.status(500).json({ error: "Internal Server Error", details: error.message });
+  }
+});
 
 
 app.get('/posts', async(req,res)=>{
@@ -41,6 +46,19 @@ posts
 })
 
 })
+
+app.delete('/posts/:id', async (req, res) => {
+  try {
+    const post = await postModel.findByIdAndDelete(req.params.id);
+    if (!post) {
+      return res.status(404).json({ message: 'Post not found' });
+    }
+    return res.status(200).json({ message: 'Post deleted successfully' });
+  } catch (error) {
+    console.error("Error deleting post:", error);
+    return res.status(500).json({ error: 'Internal server error while deleting post' });
+  }
+});
 
 app.post('/generate-image', async (req, res) => {
   try {

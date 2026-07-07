@@ -11,7 +11,7 @@
       (function() {
         var savedTheme = localStorage.getItem('theme');
         if (savedTheme === 'dark') {
-          document.body.classList.add('dark-mode');
+          document.documentElement.classList.add('dark');
         }
       })();
     </script>
