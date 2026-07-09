@@ -10,6 +10,10 @@ app.use(cors());
 app.use(express.json());
 let upload = multer({ storage: multer.memoryStorage() });
 
+// Root route to check if API is running
+app.get('/', (req, res) => {
+  res.status(200).json({ message: "MERN Post API is running successfully!" });
+});
 
 app.post('/create-post', upload.single("image"), async (req, res) => {
   try {
