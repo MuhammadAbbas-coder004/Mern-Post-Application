@@ -6,7 +6,7 @@ const Feed = () => {
   const [selectedPost, setSelectedPost] = useState(null)
 
   useEffect(() => {
-    axios.get('http://localhost:3000/posts')
+    axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:3000'}/posts`)
       .then((res) => {
         // Sort by oldest first (Pehle create kiya hua pehle)
         const sortedPosts = res.data.posts.sort((a, b) => a._id.localeCompare(b._id));
@@ -16,7 +16,7 @@ const Feed = () => {
 
   const handleDelete = async (postId) => {
     try {
-      await axios.delete(`http://localhost:3000/posts/${postId}`);
+      await axios.delete(`${import.meta.env.VITE_API_URL || 'http://localhost:3000'}/posts/${postId}`);
       setPosts(posts.filter(p => p._id !== postId));
       setSelectedPost(null);
     } catch (error) {

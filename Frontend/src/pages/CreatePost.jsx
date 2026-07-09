@@ -21,7 +21,7 @@ const CreatePost = () => {
     setIsGenerating(true);
     setAiError('');
     try {
-      const response = await axios.post('http://localhost:3000/generate-image', { prompt: aiPrompt });
+      const response = await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:3000'}/generate-image`, { prompt: aiPrompt });
       const base64Data = response.data.image;
       
       // Convert base64 to Blob to File
@@ -61,7 +61,7 @@ const CreatePost = () => {
     formData.append('image', file)
     formData.append('caption', caption)
 
-    axios.post('http://localhost:3000/create-post', formData)
+    axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:3000'}/create-post`, formData)
     .then((res)=>{
         console.log(res);
         navigate('/feed');
@@ -86,10 +86,10 @@ const CreatePost = () => {
               <label className="flex items-center gap-1.5 text-[11px] font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-widest mb-2">
                 <FaWandMagicSparkles size={14} /> Generate Image with AI
               </label>
-              <div className="flex gap-2.5 items-stretch">
+              <div className="flex flex-col sm:flex-row gap-2.5 items-stretch">
                 <input
                   type="text"
-                  className="flex-1 border border-gray-200 dark:border-gray-600 rounded-xl px-4 py-3 text-sm font-medium text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-700 outline-none focus:border-gray-900 dark:focus:border-white transition-colors duration-200 disabled:opacity-50"
+                  className="flex-1 w-full border border-gray-200 dark:border-gray-600 rounded-xl px-4 py-3 text-sm font-medium text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-700 outline-none focus:border-gray-900 dark:focus:border-white transition-colors duration-200 disabled:opacity-50"
                   placeholder="e.g. A futuristic city at sunset..."
                   value={aiPrompt}
                   onChange={(e) => setAiPrompt(e.target.value)}
@@ -97,7 +97,7 @@ const CreatePost = () => {
                 />
                 <button
                   type="button"
-                  className="px-5 py-3 bg-gray-900 dark:bg-white text-white dark:text-gray-900 rounded-xl text-sm font-semibold whitespace-nowrap hover:bg-gray-700 dark:hover:bg-gray-200 active:scale-[0.97] transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full sm:w-auto px-5 py-3 bg-gray-900 dark:bg-white text-white dark:text-gray-900 rounded-xl text-sm font-semibold whitespace-nowrap hover:bg-gray-700 dark:hover:bg-gray-200 active:scale-[0.97] transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
                   onClick={handleGenerate}
                   disabled={isGenerating || !aiPrompt}
                 >
